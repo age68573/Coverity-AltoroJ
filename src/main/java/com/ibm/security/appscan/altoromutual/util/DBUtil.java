@@ -378,22 +378,16 @@ public class DBUtil {
 			return e.toString();
 		}
 	}
-    public static String addUser(String username, String password, String firstname, String lastname) {
-		try (Connection connection = getConnection();
-			 Statement statement = connection.createStatement()) {
-			
-			String query = "INSERT INTO PEOPLE (USER_ID, PASSWORD, FIRST_NAME, LAST_NAME, ROLE) VALUES (?, ?, ?, ?, 'user')";
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, username);
-			preparedStatement.setString(2, password);
-			preparedStatement.setString(3, firstname);
-			preparedStatement.setString(4, lastname);
-			
-			preparedStatement.executeUpdate();
-			
+
+	public static String addUser(String username, String password, String firstname, String lastname) {
+		try {
+			Connection connection = getConnection();
+			Statement statement = connection.createStatement();
+			statement.execute("INSERT INTO PEOPLE (USER_ID,PASSWORD,FIRST_NAME,LAST_NAME,ROLE) VALUES ('"+username+"','"+password+"', '"+firstname+"', '"+lastname+"','user')");
 			return null;
-		} catch (SQLException e) {
+		} catch (SQLException e){
 			return e.toString();
+			
 		}
 	}
 	
